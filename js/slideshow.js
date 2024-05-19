@@ -5,7 +5,7 @@ var SLIDESHOW_INTERVAL   = 3000;
 // Automatic slideshow block interval in milliseconds
 var SLIDESHOW_BLOCK_INTERVAL   = 333;
 // Indicates audio (true) or no audio (false) during slideshow
-var SLIDESHOW_AUDIO      = true;
+var SLIDESHOW_AUDIO      = false;
 
 // Current slide index
 var slideIndex;
@@ -15,8 +15,6 @@ var slideshowTimeout = null;
 var slideshowSound = null;
 // Array of slides with class "spacePix"
 var slideshowElems = document.getElementsByClassName("spacePix");
-// Indicates if slideshow has valid from/to specified
-var slideshowFromTo = false;
 // Indicates if mobile device (if not detected, default behavior occurs which is acceptable)
 var isMobileDevice = false;
 
