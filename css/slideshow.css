@@ -1,7 +1,25 @@
+body {
+  background-image: url("../images/background.jpg");
+  background-color: #000000;
+  color: #FFFFFF;
+  margin: auto;
+  max-width: max-content;
+}
+
 #outerTable td {
   text-align: center;
   vertical-align: middle;
   padding: 5px;
+}
+
+#slideTitle {
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  display: block;
+  text-wrap: wrap;
+  background-color: rgb(1,9,20,0.6);
 }
 
 #innerTable td {
@@ -28,6 +46,7 @@ button {
 }
 
 #slideName {
+  font-weight: bold;
   text-align: center;
   vertical-align: middle;
   display: block;
