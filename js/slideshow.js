@@ -220,8 +220,13 @@ function setPicDimensions() {
   document.getElementById("slideName").style.width = (minDim-2) + 'px';
 }
 
-// Handle window load
-window.onload = function() {
+// Handle window resize
+window.onresize = function() {
+  setPicDimensions();
+}
+
+// Handle DOM loaded event
+document.addEventListener("DOMContentLoaded", (event) => {
   isMobileDevice = /iPhone|Android|BlackBerry/i.test(navigator.userAgent);
   setPicDimensions();
 
@@ -234,9 +239,4 @@ window.onload = function() {
     slideIndex = 0;
     slideshow();
   }
-}
-
-// Handle window resize
-window.onresize = function() {
-  setPicDimensions();
-}
+});
