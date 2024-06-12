@@ -1,11 +1,11 @@
 // Indicates manual (true) or automatic (false) slideshow
-var MANUAL_SLIDESHOW     = false;
+var MANUAL_SLIDESHOW = false;
 // Automatic slideshow interval in milliseconds
-var SLIDESHOW_INTERVAL   = 3000;
+var SLIDESHOW_INTERVAL = 3000;
 // Automatic slideshow block interval in milliseconds
-var SLIDESHOW_BLOCK_INTERVAL   = 333;
+var SLIDESHOW_BLOCK_INTERVAL = 333;
 // Indicates audio (true) or no audio (false) during slideshow
-var SLIDESHOW_AUDIO      = false;
+var SLIDESHOW_AUDIO = false;
 
 // Current slide index
 var slideIndex;
@@ -224,6 +224,16 @@ function setPicDimensions() {
 window.onload = function() {
   isMobileDevice = /iPhone|Android|BlackBerry/i.test(navigator.userAgent);
   setPicDimensions();
+
+  // Initiate slideshow
+  if (MANUAL_SLIDESHOW) {
+    hidePlayButton();
+    slideIndex = 1;
+    showPic(slideIndex);
+  } else {
+    slideIndex = 0;
+    slideshow();
+  }
 }
 
 // Handle window resize
