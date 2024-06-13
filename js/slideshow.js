@@ -53,6 +53,7 @@ function toggleFlow(elem) {
 
     // Set button text to ">" (play)
     elem.innerHTML = "&#9658;";
+    elem.title = "Play";
 
     // Pause audio if it exists
     if (slideshowSound != null) {
@@ -64,6 +65,7 @@ function toggleFlow(elem) {
 
     // Set button text to "||" (pause)
     elem.innerHTML = "&#10074;&#10074;";
+    elem.title = "Pause";
 
     // Play audio if it exists
     if (slideshowSound != null) {
