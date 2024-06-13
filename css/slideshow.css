@@ -19,7 +19,8 @@ body {
   vertical-align: middle;
   display: block;
   text-wrap: wrap;
-  background-color: rgb(1,9,20,0.6);
+  background-color: rgba(1, 9, 20, 0.6);
+  text-shadow: 5px 5px 5px rgba(255, 255, 255, 0.6);
 }
 
 #innerTable td {
@@ -29,7 +30,7 @@ body {
   height: 674px;*/
   border-style: groove;
   border-width: 3px;
-/*box-shadow: 5px 5px 5px #444444; Not needed for dark background*/
+  box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.6);
   background-color: #000000;
 }
 
@@ -51,5 +52,5 @@ button {
   vertical-align: middle;
   display: block;
   text-wrap: wrap;
-  background-color: rgb(1,9,20,0.6);
+  background-color: rgba(1, 9, 20, 0.6);
 }
