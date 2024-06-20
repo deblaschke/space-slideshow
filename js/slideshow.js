@@ -222,6 +222,17 @@ function setPicDimensions() {
   document.getElementById("slideName").style.width = (minDim-2) + 'px';
 }
 
+// Handle window load
+window.onload = function() {
+  if (!SLIDESHOW_AUDIO) {
+    // Remove music credit (last slide) if it exists
+    var audioCredit = slideshowElems[slideshowElems.length-1].src;
+    if (audioCredit.indexOf("theend3") != -1) {
+      slideshowElems[slideshowElems.length-1].remove();
+    }
+  }
+}
+
 // Handle window resize
 window.onresize = function() {
   setPicDimensions();
