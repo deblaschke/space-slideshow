@@ -61,7 +61,7 @@ function getDescription(path) {
 
   // Display space to occupy slideName span if description empty
   if (result.length == 0) {
-    result = "&nbsp;";
+    result = "&nbsp;<BR>&nbsp;";
   }
 
   return result;
