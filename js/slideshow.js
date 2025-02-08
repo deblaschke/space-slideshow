@@ -44,7 +44,8 @@ function hidePlayButton() {
   document.getElementById("buttonPlayPause").style.display = "none";
 }
 
-// toggleFlow plays/pauses slideshow where elem is play/pause button
+// toggleFlow plays/pauses slideshow as result of user action (mouseclick or keystroke)
+// where elem is play/pause button
 function toggleFlow(elem) {
   if (slideshowTimeout != null) {
     // Pause slideshow
@@ -74,14 +75,16 @@ function toggleFlow(elem) {
   }
 }
 
-// changePic changes slide index where n is delta (+1 or -1)
+// changePic changes slide as result of user action (mouseclick or keystroke)
+// where n is delta (+1 or -1)
 function changePic(n) {
-  showPic(slideIndex += n);
+  showPic(n);
 
   if (!MANUAL_SLIDESHOW) {
     // Automatic slideshow
 
     if (slideshowTimeout != null) {
+      // Set new timeout for new slide
       clearInterval(slideshowTimeout);
       slideshowTimeout = setInterval(slideshow, SLIDESHOW_INTERVAL);
 
@@ -100,13 +103,15 @@ function changePic(n) {
   }
 }
 
-// showPic displays slide where n is slide index
+// showPic displays slide where n is change to slideIndex
 function showPic(n) {
+  slideIndex += n;
+
   // Handle wrapping past end of slideshow
-  if (n > slideshowElems.length) {slideIndex = 1}
+  if (slideIndex > slideshowElems.length) {slideIndex = 1}
 
   // Handle wrapping before beginning of slideshow
-  if (n < 1) {slideIndex = slideshowElems.length}
+  if (slideIndex < 1) {slideIndex = slideshowElems.length}
 
   // Set all slides to hidden
   var i;
@@ -119,28 +124,14 @@ function showPic(n) {
 
   // Set slide description
   document.getElementById("slideName").innerHTML = getDescription(slideshowElems[slideIndex-1].src);
-  getDescription(slideshowElems[slideIndex-1].src);
 }
 
-// slideshow begins automatic slideshow
+// slideshow runs automatic slideshow
 function slideshow() {
-  slideIndex++;
-
-  // Handle wrapping past end of slideshow
-  if (slideIndex > slideshowElems.length) {slideIndex = 1}
-
-  // Set all slides to hidden
-  var i;
-  for (i = 0; i < slideshowElems.length; i++) {
-    slideshowElems[i].style.display = "none";
-  }
-
-  // Set current slide to visible
-  slideshowElems[slideIndex-1].style.display = "block";
+  showPic(1);
 
   // Set slide description
   var slideName = getDescription(slideshowElems[slideIndex-1].src);
-  document.getElementById("slideName").innerHTML = slideName;
 
   // Speed up or slow down slideshow if slide is beginning/end of block
   var index = slideName.trim().indexOf(' ');
@@ -166,7 +157,7 @@ function slideshow() {
   }
 }
 
-// Handle left and right arrow keys
+// Handle left arrow, right arrow and pause keys
 document.onkeydown = function(event) {
   switch (event.key) {
     case 'ArrowLeft':
@@ -174,6 +165,11 @@ document.onkeydown = function(event) {
       break;
     case 'ArrowRight':
       changePic(1);
+      break;
+    case 'Escape':
+      if (!MANUAL_SLIDESHOW) {
+        toggleFlow(document.getElementById("buttonPlayPause"));
+      }
       break;
   }
 }
@@ -242,14 +238,13 @@ window.onresize = function() {
 document.addEventListener("DOMContentLoaded", (event) => {
   isMobileDevice = /iPhone|Android|BlackBerry/i.test(navigator.userAgent);
   setPicDimensions();
+  slideIndex = 0;
 
   // Initiate slideshow
   if (MANUAL_SLIDESHOW) {
     hidePlayButton();
-    slideIndex = 1;
-    showPic(slideIndex);
+    showPic(1);
   } else {
-    slideIndex = 0;
     slideshow();
   }
 });
