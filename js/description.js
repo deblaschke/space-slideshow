@@ -12,18 +12,18 @@ function getDescription(path) {
     var file = path.substring(index + 1, path.lastIndexOf('.'));
 
     // File begins with "yyyymmdd_" for slides
-    if (file.match(/^[0-9ymd]{8}[_T]{1}/)) {
+    if (/^[0-9ymd]{8}[_T]{1}/.test(file)) {
       var date = file.substring(0, 8);
 
-      if (file.match(/^[0-9ymd]{8}_[C-Z]{1}[0-9]{7}/)) {
+      if (/^[0-9ymd]{8}_[C-Z]{1}[0-9]{7}/.test(file)) {
         // Found digital camera picture name ("yyyymmdd_Annnnnnn")
         result = file.substring(9, 17);
         index = 17;
-      } else if (file.match(/^[0-9ymd]{8}_[A-B]{1}[0-9]{3}-[0-9]{2}/)) {
+      } else if (/^[0-9ymd]{8}_[A-B]{1}[0-9]{3}-[0-9]{2}/.test(file)) {
         // Found film camera picture name ("yyyymmdd_Annn-nn")
         result = file.substring(9, 16);
         index = 16;
-      } else if (file.match(/^[0-9ymd]{8}T[0-9]{6}/)) {
+      } else if (/^[0-9ymd]{8}T[0-9]{6}/.test(file)) {
         // Found cell phone camera picture name ("yyyymmddTnnnnnn")
         result = file.substring(0, 8) + file.substring(9, 15);
         index = 15;

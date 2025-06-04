@@ -114,8 +114,7 @@ function showPic(n) {
   if (slideIndex < 1) {slideIndex = slideshowElems.length}
 
   // Set all slides to hidden
-  var i;
-  for (i = 0; i < slideshowElems.length; i++) {
+  for (var i = 0; i < slideshowElems.length; i++) {
     slideshowElems[i].style.display = "none";
   }
 
@@ -191,7 +190,7 @@ if (SLIDESHOW_AUDIO) {
 
   // Play audio object, catching/ignoring any errors
   promise = slideshowSound.play();
-  if (promise) {
+  if (promise != null) {
     promise.catch(function(error) { });
   }
 }
