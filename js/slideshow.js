@@ -39,6 +39,90 @@ if ("URLSearchParams" in window) {
   }
 }
 
+// getDescription returns description for regular slide
+function getDescription(path) {
+  var result = "";
+
+  // path is of format "*/file.jpg"
+  // file is of format "yyyymmdd_picture-description" where yyyy is always four-digit year
+
+  // Process valid paths (must have directory separator and .jpg/.gif extension)
+  path = decodeURI(path);
+  var index = path.lastIndexOf('/');
+  if (index >= 0 && path.lastIndexOf('.jpg') > index) {
+    var file = path.substring(index + 1, path.lastIndexOf('.'));
+
+    // File begins with "yyyymmdd_" or "yyyymmddT" for slides
+    if (/^[0-9md]{8}[_T]{1}/.test(file)) {
+      var date = file.substring(0, 8);
+
+      if (/^[0-9md]{8}_[C-Z]{1}[0-9]{7}/.test(file)) {
+        // Found digital camera picture name ("yyyymmdd_Annnnnnn")
+        result = file.substring(9, 17);
+        index = 17;
+      } else if (/^[0-9md]{8}_[A-B]{1}[0-9]{3}-[0-9]{2}/.test(file)) {
+        // Found film camera picture name ("yyyymmdd_Annn-nn")
+        result = file.substring(9, 16);
+        index = 16;
+      } else if (/^[0-9md]{8}T[0-9]{6}/.test(file)) {
+        // Found cell phone camera picture name ("yyyymmddTnnnnnn") NOT YET USED!
+        result = file.substring(0, 8) + file.substring(9, 15);
+        index = 15;
+      }
+
+      // Continue processing if recognized picture name
+      if (result.length > 0) {
+        // Handle description if present
+        index = file.indexOf('-', index);
+        if (index >= 0) {
+          // Picture description is everything after "-"
+          var desc = file.substring(index + 1);
+
+          // Replace underscores with spaces
+          result = result + " - " + desc.replace(/_/g, ' ');
+
+          // Replace special characters ("[*]") with HTML entity names ("&*;")
+          index = file.indexOf('[');
+          if (index >= 0 && index < file.indexOf(']')) {
+            result = result.replace(/\[/g, '&');
+            result = result.replace(/\]/g, ';');
+          }
+        }
+
+        // Get English date from yyyymmdd accounting for unknown month and/or day
+        var dateStr = "";
+        if (date.substring(4, 6) != "mm") {
+          var month = [ "January", "February", "March", "April",
+                        "May", "June", "July", "August", "September",
+                        "October", "November", "December" ][+date.substring(4, 6) - 1];
+          if (date.substring(6, 8) != "dd") {
+            var day = date.substring(6, 8);
+            if (day.charAt(0) == '0') {
+              day = day.charAt(1);
+            }
+            dateStr = month + " " + day + ", " + date.substring(0, 4);
+          } else {
+            dateStr = month + " " + date.substring(0, 4);
+          }
+        } else {
+          dateStr = date.substring(0, 4);
+        }
+
+        if (dateStr.length > 0) {
+          result = result + "<BR>(" + dateStr + ")";
+        }
+      }
+    }
+  }
+
+  // Display space to occupy slideName span if description empty
+  if (result.length == 0) {
+    result = "&nbsp;<BR>&nbsp;";
+  }
+
+  return result;
+}
+
 // hidePlayButton hides play/pause button for manual slideshows
 function hidePlayButton() {
   document.getElementById("buttonPlayPause").style.display = "none";
