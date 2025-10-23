@@ -81,6 +81,9 @@ function getDescription(path) {
           // Replace underscores with spaces
           result = result + " - " + desc.replace(/_/g, ' ');
 
+          // Replace at sign with English
+          result = result.replace(/@/g, " viewed from ");
+
           // Replace special characters ("[*]") with HTML entity names ("&*;")
           index = file.indexOf('[');
           if (index >= 0 && index < file.indexOf(']')) {
