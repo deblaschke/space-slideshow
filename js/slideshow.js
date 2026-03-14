@@ -25,16 +25,16 @@ var slideBlockEnd   = ["G1090195", "I1040294", "I1060566", "I1110495", "I1150466
 // Allow for override of default behavior in URL via query parameters
 if ("URLSearchParams" in window) {
   var urlParams = new URLSearchParams(window.location.search);
-  var urlParam = urlParams.get('mode');
-  if (urlParam === 'manual') {
+  var urlParam = urlParams.get("mode");
+  if (urlParam === "manual") {
     MANUAL_SLIDESHOW = true;
   }
-  urlParam = urlParams.get('interval');
+  urlParam = urlParams.get("interval");
   if (/^\d+$/.test(urlParam)) {
     SLIDESHOW_INTERVAL = parseInt(urlParam, 10);
   }
-  urlParam = urlParams.get('audio');
-  if (urlParam === 'off') {
+  urlParam = urlParams.get("audio");
+  if (urlParam === "off") {
     SLIDESHOW_AUDIO = false;
   }
 }
@@ -48,9 +48,9 @@ function getDescription(path) {
 
   // Process valid paths (must have directory separator and .jpg/.gif extension)
   path = decodeURI(path);
-  var index = path.lastIndexOf('/');
-  if (index >= 0 && path.lastIndexOf('.jpg') > index) {
-    var file = path.substring(index + 1, path.lastIndexOf('.'));
+  var index = path.lastIndexOf("/");
+  if (index >= 0 && path.lastIndexOf(".jpg") > index) {
+    var file = path.substring(index + 1, path.lastIndexOf("."));
 
     // File begins with "yyyymmdd_" or "yyyymmddT" for slides
     if (/^[0-9md]{8}[_T]{1}/.test(file)) {
@@ -73,22 +73,22 @@ function getDescription(path) {
       // Continue processing if recognized picture name
       if (result.length > 0) {
         // Handle description if present
-        index = file.indexOf('-', index);
+        index = file.indexOf("-", index);
         if (index >= 0) {
           // Picture description is everything after "-"
           var desc = file.substring(index + 1);
 
           // Replace underscores with spaces
-          result = result + " - " + desc.replace(/_/g, ' ');
+          result = result + " - " + desc.replace(/_/g, " ");
 
           // Replace at sign with English
           result = result.replace(/@/g, " viewed from ");
 
           // Replace special characters ("[*]") with HTML entity names ("&*;")
-          index = file.indexOf('[');
-          if (index >= 0 && index < file.indexOf(']')) {
-            result = result.replace(/\[/g, '&');
-            result = result.replace(/\]/g, ';');
+          index = file.indexOf("[");
+          if (index >= 0 && index < file.indexOf("]")) {
+            result = result.replace(/\[/g, "&");
+            result = result.replace(/\]/g, ";");
           }
         }
 
@@ -220,7 +220,7 @@ function slideshow() {
   var slideName = getDescription(slideshowElems[slideIndex-1].src);
 
   // Speed up or slow down slideshow if slide is beginning/end of block
-  var index = slideName.trim().indexOf(' ');
+  var index = slideName.trim().indexOf(" ");
   if (index != -1) {
     slideName = slideName.substring(0, index);
   }
@@ -246,13 +246,13 @@ function slideshow() {
 // Handle left arrow, right arrow and pause keys
 document.onkeydown = function(event) {
   switch (event.key) {
-    case 'ArrowLeft':
+    case "ArrowLeft":
       changePic(-1);
       break;
-    case 'ArrowRight':
+    case "ArrowRight":
       changePic(1);
       break;
-    case 'Escape':
+    case "Escape":
       if (!MANUAL_SLIDESHOW) {
         toggleFlow(document.getElementById("buttonPlayPause"));
       }
@@ -266,10 +266,10 @@ if (SLIDESHOW_AUDIO) {
   slideshowSound = new Audio("media/audio.mp3");
 
   // Set audio object to loop
-  if (typeof slideshowSound.loop == 'boolean') {
+  if (typeof slideshowSound.loop == "boolean") {
     slideshowSound.loop = true;
   } else {
-    slideshowSound.addEventListener('ended', function() {
+    slideshowSound.addEventListener("ended", function() {
       this.currentTime = 0;
       this.play();
     }, false);
@@ -297,11 +297,11 @@ function setPicDimensions() {
   }
 
   // Set innerTable dimensions (a square) to smallest dimension
-  document.getElementById("innerTable").style.width = minDim + 'px';
-  document.getElementById("innerTable").style.height = minDim + 'px';
+  document.getElementById("innerTable").style.width = minDim + "px";
+  document.getElementById("innerTable").style.height = minDim + "px";
 
   // Set slideName width to smaller than innerTable width
-  document.getElementById("slideName").style.width = (minDim-2) + 'px';
+  document.getElementById("slideName").style.width = (minDim-2) + "px";
 }
 
 // Handle window load
