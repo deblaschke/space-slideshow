@@ -65,7 +65,7 @@ function getDescription(path) {
         result = file.substring(9, 16);
         index = 16;
       } else if (/^[0-9md]{8}T[0-9]{6}/.test(file)) {
-        // Found cell phone camera picture name ("yyyymmddTnnnnnn") NOT YET USED!
+        // Found cell phone camera picture name ("yyyymmddTnnnnnn")
         result = file.substring(0, 8) + file.substring(9, 15);
         index = 15;
       }
